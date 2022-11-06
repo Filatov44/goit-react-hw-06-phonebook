@@ -11,6 +11,7 @@ export const StyledLabel = styled.label`
 `;
 
 export const StyledInput = styled.input`
+  font-size: 20px;
   padding: 10px;
   max-width: 400px;
   margin: auto;
