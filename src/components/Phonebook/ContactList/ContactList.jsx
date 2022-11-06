@@ -9,6 +9,9 @@ import {
   StyledContactDel,
 } from 'components/Phonebook/ContactList/ContactList.styled';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function ContactList() {
   // вытягиваем массив контактов из store
   const contacts = useSelector(getContacts);
@@ -33,7 +36,9 @@ export default function ContactList() {
           <FaUserAlt />
         </StyledContactIcon>
         {name}: {number}
-        <StyledContactDel onClick={() => dispatch(deleteContact(id))}>
+        <StyledContactDel onClick={() => {
+          dispatch(deleteContact(id));
+        toast.warn(`Контакт ${name} удален`);}}>
           <FaTrash />
         </StyledContactDel>{' '}
       </StyledContactItem>

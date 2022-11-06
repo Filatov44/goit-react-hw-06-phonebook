@@ -4,6 +4,7 @@ import { addContact, getContacts } from 'redux/contacts-slice';
 
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   StyledContactForm,
   StyledLabel,
@@ -31,19 +32,32 @@ export default function ContactForm() {
     e.preventDefault();
     const id = nanoid();
 
-    const isDuplicate = contacts.find(
+    const isDuplicateName = contacts.find(
       contact =>
-        contact.name.toLowerCase() === name.toLowerCase() ||
+        contact.name.toLowerCase() === name.toLowerCase() 
+    );
+
+    const isDuplicateNumber = contacts.find(
+      contact =>
         contact.number.toLowerCase() === number.toLowerCase()
     );
 
-    if (isDuplicate) {
+    if (isDuplicateName) {
       resetForm();
-      return toast.info(`${name} is already in contacts`);
+      return toast.info(
+        `Контакт с именем ${name} уже находится в телефонной книге`
+      );
+    }
+
+    if (isDuplicateNumber) {
+      resetForm();
+      return toast.info(`${number} уже записан в телефонной книге`);
+      
     }
 
     //отправляем экшен со значением фильтра в store
-    dispatch(addContact({id, name, number }));
+    dispatch(addContact({ id, name, number }));
+    toast.success(`Контакт ${name} успешно добавлен в телефонную книгу`);
     resetForm();
   };
 
